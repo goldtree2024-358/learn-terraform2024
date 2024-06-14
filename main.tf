@@ -1,31 +1,28 @@
-# Copyright (c) HashiCorp, Inc.
-# SPDX-License-Identifier: MPL-2.0
+#terraform {
+#  required_providers {
+#    aws = {
+#      source  = "hashicorp/aws"
+#      version = "~> 4.16"
+#    }
+#  }
+#
+#  required_version = ">= 1.2.0"
+#}
 
 provider "aws" {
-  region = var.region
+  region  = "us-east-1"
 }
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
-resource "aws_instance" "ubuntu" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.instance_type
+resource "aws_instance" "app_server" {
+  count                      = 2
+  ami               		= var.instance_ami
+  instance_type     		= var.instance_type
+  availability_zone 		= var.availability_zone
+  vpc_security_group_ids     = var.vpc_security_group_ids
+  key_name                   = var.key_name
 
   tags = {
-    Name = var.instance_name
+     Name = "${var.instance_name}_${count.index+1}"
   }
 }
+

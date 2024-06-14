@@ -2,15 +2,15 @@
 # SPDX-License-Identifier: MPL-2.0
 
 terraform {
-
+/*
   cloud {
-    organization = "organization-name"
+    organization = "learn-terraform2024"
 
     workspaces {
-      name = "learn-terraform"
+      name = "workspace-AWS"
     }
   }
-
+*/
   required_providers {
     aws = {
       source  = "hashicorp/aws"
