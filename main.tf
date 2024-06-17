@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "app_server" {
-  count                      = 1
+  count                      = 2
   ami               		= var.instance_ami
   instance_type     		= var.instance_type
   availability_zone 		= var.availability_zone
